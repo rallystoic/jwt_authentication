@@ -22,15 +22,13 @@ namespace authsystem
     {
        
 
-        // random salt and decode to 64basestring 
+        // random salt and covert to 64basestring 
         byte[] Randomsalt = new byte[128 / 8];
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(Randomsalt);
         }
-        // after random this salt byte 
-        // convert salt byte to base 64string and convert back to a byte
-        // if we didnt  use this methode the authentication methode will fail
+       
     string saltTostring = Convert.ToBase64String(Randomsalt);
         byte[] getBytesalt = Encoding.ASCII.GetBytes(saltTostring);
 
@@ -44,8 +42,8 @@ namespace authsystem
             numBytesRequested: 256 / 8));
             var salted = Convert.ToBase64String(Randomsalt); 
             Console.WriteLine(salted);
-       /// after this process  we keep username,userpassword salt(randomed) and hashed result to database
-       /// datetime  of this is optional ! 
+        keep username,userpassword salt(randomed) and hashed result to database
+ 
              using (var db = new  AuthenticationContext())
              {
                  var newuser = new user { username = username,salt = salted,hashed = Hashed };
@@ -56,9 +54,8 @@ namespace authsystem
         
     }
     /// this is authentication process if user is valid then we generate a token for a valiaded user!
-    /// we use system.linq to query user and password in the database(sqlite3) 
     /// if user existed in the the database , provided a salt from a database to be hashed with password
-    /// if hased from the request matched a hashed from database then the requested user is valid  ! so we provid a token !
+    /// if hased from the request matched a hashed from database then the requested user is valid  ! (provid a token)
     public void Autentication(string Username,string Userpassword)
     {
             using (var db = new  AuthenticationContext())
@@ -94,7 +91,7 @@ namespace authsystem
                     }
                     else
                     {
-                        // this is a test we do not hardcode our secret 
+                        //some secret here
                         string secret = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
                         // byte key will be use inside tokendesriptor()
                         var key = Encoding.ASCII.GetBytes(secret);
@@ -108,7 +105,7 @@ namespace authsystem
 
 		                };
 
-                        // listof claim (claincollection) need to be parse inside claimidentity()
+                        //add claimcollection
 
                         ClaimsIdentity myclaim = new ClaimsIdentity();
                         myclaim.AddClaims(claimcollection);
