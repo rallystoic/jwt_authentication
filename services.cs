@@ -42,7 +42,7 @@ namespace authsystem
             numBytesRequested: 256 / 8));
             var salted = Convert.ToBase64String(Randomsalt); 
             Console.WriteLine(salted);
-        keep username,userpassword salt(randomed) and hashed result to database
+      //  keep username,userpassword salt(randomed) and hashed result to database
  
              using (var db = new  AuthenticationContext())
              {
